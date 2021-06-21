@@ -12,6 +12,7 @@ unsigned long DistanceSensor::measure_distance() {
     digitalWrite(_ping_pin, HIGH);
     delayMicroseconds(10);
     digitalWrite(_ping_pin, LOW);
+
     pinMode(_echo_pin, INPUT);
     unsigned long duration = pulseIn(_echo_pin, HIGH);
     return microsecondsToCentimeters(duration);

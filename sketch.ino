@@ -1,6 +1,4 @@
 #include "distance_sensor.hpp"
-const int pingPin = 7; // Trigger Pin of Ultrasonic Sensor
-const int echoPin = 6; // Echo Pin of Ultrasonic Sensor
 
 const DistanceSensor forward(7, 6);
 void setup() {
@@ -8,19 +6,13 @@ void setup() {
 }
 
 void loop() {
-   long duration, cm;
-   cm = forward.measure_distance();
+    long cm;
+    cm = forward.measure_distance();
 
-   Serial.print(cm);
-   Serial.print("cm");
-   Serial.println();
-   delay(100);
+
+    digitalWrite(13, (cm >= 20 ? HIGH : LOW));
+    Serial.print(cm);
+    Serial.print("cm");
+    Serial.println();
+    delay(100);
 }
-
-long pulse_distance_forward() {
-}
-
-long microsecondsToInches(long microseconds) {
-   return microseconds / 74 / 2;
-}
-
