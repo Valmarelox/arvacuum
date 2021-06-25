@@ -1,13 +1,16 @@
+#include "pin.hpp"
+#include "sensor.hpp"
 
-class DistanceSensor {
+class DistanceSensor: public Sensor {
 public:
     DistanceSensor(unsigned int ping_pin, unsigned int echo_pin) :
-        _ping_pin(ping_pin), _echo_pin(echo_pin) {}
+        _ping_pin(DigitalPin::alloc_pin(ping_pin, DigitalPin::Mode::OUTPUT)), 
+        _echo_pin(DigitalPin::alloc_pin(echo_pin, DigitalPin::Mode::INPUT)) { }
 
-    unsigned long measure_distance();
+    unsigned long measure();
 
 
 private:
-    unsigned int _ping_pin;
-    unsigned int _echo_pin;
+    DigitalPin _ping_pin;
+    DigitalPin _echo_pin;
 };

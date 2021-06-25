@@ -1,18 +1,23 @@
+#include "prog.hpp"
 #include "distance_sensor.hpp"
 
-const DistanceSensor forward(7, 6);
-void setup() {
-   Serial.begin(9600); // Starting Serial Terminal
-}
+int main() {
+    ArduinoProgram prog;
+    DistanceSensor forward(7, 6);
+    DigitalPin led = DigitalPin::alloc_pin(13);
+    Serial.print("boot\n");
 
-void loop() {
-    long cm;
-    cm = forward.measure_distance();
+    while (true) {
+        prog.loop();
 
+        long cm;
+        cm = forward.measure();
 
-    digitalWrite(13, (cm >= 20 ? HIGH : LOW));
-    Serial.print(cm);
-    Serial.print("cm");
-    Serial.println();
-    delay(100);
+        led.set((cm >= 20 ? DigitalPin::Level::HIGH : DigitalPin::Level::LOW));
+        Serial.print(cm);
+        Serial.print("cm");
+        Serial.println();
+        delay(100);
+    }
+    return 0;
 }

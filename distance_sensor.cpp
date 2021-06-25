@@ -1,20 +1,18 @@
 #include "distance_sensor.hpp"
 #include <Arduino.h>
 
-long microsecondsToCentimeters(long microseconds) {
+static long microsecondsToCentimeters(long microseconds) {
    return microseconds / 29 / 2;
 }
 
-unsigned long DistanceSensor::measure_distance() {
-    pinMode(_ping_pin, OUTPUT);
-    digitalWrite(_ping_pin, LOW);
+unsigned long DistanceSensor::measure() {
+    _ping_pin.set(DigitalPin::Level::LOW);
     delayMicroseconds(2);
-    digitalWrite(_ping_pin, HIGH);
+    _ping_pin.set(DigitalPin::Level::HIGH);
     delayMicroseconds(10);
-    digitalWrite(_ping_pin, LOW);
+    _ping_pin.set(DigitalPin::Level::LOW);
 
-    pinMode(_echo_pin, INPUT);
-    unsigned long duration = pulseIn(_echo_pin, HIGH);
+    unsigned long duration = _echo_pin.pulse_in(DigitalPin::Level::HIGH);
     return microsecondsToCentimeters(duration);
 
 }
